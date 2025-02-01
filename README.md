@@ -1,37 +1,43 @@
-# CakeMaker
-Endless cakes! The story that never ends…
-Aplicaţia simulează un aparat de făcut prăjitură automat cu resurse nelimitate. Rolul lui principal este să servească clientul cu prăjitura dorită. În altă ordine de idei clientul va avea un meniu principal care îi va oferi clientului anumite posibilităţi de selecţie. Vom urmări mai jos arhitectura completă a aplicaţiei noastre.
-Rețineți că aplicația simulează crearea de prăjituri la comandă….nelimitat 😊.
-Se identifică următoarele componente:
+Endless Cakes! The story that never ends… The application simulates an automatic cake-making machine with unlimited resources. Its main role is to serve the customer with the desired cake. On the other hand, the customer will have a main menu that provides them with certain selection options. Below, we will explore the complete architecture of our application. Keep in mind that the application simulates the creation of cakes on demand… endlessly 😊. The following components are identified:
 
-● Command Panel - această componentă este interfaţa cu clientul, dat fiind că este o simulare această va fi CLI (command line interface). El va conţine toate funcţiile necesare pentru a satisface dorinţele clientului.
+- **Command Panel**: This component is the interface with the customer. Since this is a simulation, it will be a CLI (command line interface). It will contain all the necessary functions to fulfill the customer's requests.
 
-● Command Taker - această componentă preia comanda de la CommandPanel. El comunică, CakeMaker and CarouselOfCakes.
+- **Command Taker**: This component takes the order from the CommandPanel. It communicates with both the CakeMaker and the CarouselOfCakes.
 
-○ Functionalitatea lui CommandTaker este aceea de a onora comenzile date de client. El le administrează conform funcţionalităţii lui, şi anume: în momentul în care primeşte o comandă de la CommandPanel. Onorarea comenzii constă în verificarea cum că produsul se află în CarouselOfCakes (mini storage), dacă aceasta există, va fi eliminat din carousel of Cakes şi îi va distribuii clientului. În cazul în care nu se află în CarouselOfCakes, acesta îl va interoga pe CakeMaker cerându-i să onoreze comanda.
+  - The functionality of the CommandTaker is to fulfill the customer's orders. It manages them according to its functionality, which is: when it receives an order from the CommandPanel, fulfilling the order involves checking if the product is available in the CarouselOfCakes (mini storage). If it exists, it will be removed from the CarouselOfCakes and delivered to the customer. If it is not in the CarouselOfCakes, it will request the CakeMaker to fulfill the order.
 
-● CarouselOfCakes - acesta este un storage de prăjituri. Are o capacitate maximă de 12 prăjituri. El va accepta doar elemente de tipul Prăjitura. Acest aspect în vom aborda mai târziu în proiect.
-● CakeMaker - este cel care face prajitura. El realizează o prăjitură într-un interval specificat in reteta.
+- **CarouselOfCakes**: This is a cake storage. It has a maximum capacity of 12 cakes. It will only accept items of type Cake. This aspect will be addressed later in the project.
 
-CommandPanel
-- atributele clasei: lista de reţete şi componenta CommandPanel
-- functionalităţi:
-- showProducts(): va afişa toate produsele care sunt disponibile pentru cumpărare
-- selectProduct(name: string): va selecta produsul dorit din meniu şi îl va transmite mai departe lui CommandTaker pentru a fi preluată comanda.
-- selectProduct(name: string, nrOfProducts: int): supraîncarcată metoda de mai sus fiind precizat şi cantitatea produsului dorit.
-- showProductsInCarousel(): va afişa în consolă ce va produse sunt în depozitul circular.
-CommandTaker
-- atributele clasei: CarouselOfCakes – cel ce detine cele mai cumparate prajituri, CakeMaker-ul cel ce face prijiturile, CakeRecipe – lista cu prajituri gata facute.
-- funcţionalităţi:
-- takeCommand(recipe: CakeRecipe): Cake - preia comanda de la CommandPanel si o trimite mai departe CakeMaker-ului. Inainte El mai face o verificare daca prajitura se afla in CarouselOfCakes, dacă acolo se află produsul dorit atunci se va lua direct de acolo.
-- takeCommand(recipe: CakeRecipe, nrOfCakes): Array[Cake] - preia comanda în cazul în care sunt mai multe. Dacă se cere o cantitate de produse atunci se va cere direct CakeMaker-ului.
-- getCakesFromCarousel(): Array[Cake] - returnează lista de prăjituri ce se află în CarouselOfCakes.
-- checkCarouselOfCakes(): bool - verifică capacitatea curentă din CarouselOfCakes.
-- refillCarousel():void - dacă capacitatea din Carousel este mică, această metodă îi va cere lui CakeMaker să facă atâtea prăjituri câte sunt necesare pentru a umple CarouselOfCakes la maxim.
-CakeMaker
-- atributele clasei: -
-- funcţiile clasei:
-- takeCommand(recipe: RecipeCake): Cake - această metodă simulează crearea unei prăjituri şi anume pentru fiecare reţetă primită, această aşteaptă 5 secunde, după care ajunge să returneze un obiect de tip Cake. Din reţetă va prelua numele.
+- **CakeMaker**: This is the one who makes the cake. It creates a cake within a specified time interval according to the recipe.
+
+### CommandPanel
+
+**Class attributes**: List of recipes and the CommandPanel component.
+
+**Functionalities**:
+- `showProducts()`: Displays all the products available for purchase.
+- `selectProduct(name: string)`: Selects the desired product from the menu and forwards it to the CommandTaker to process the order.
+- `selectProduct(name: string, nrOfProducts: int)`: An overloaded version of the above method, specifying the quantity of the desired product.
+- `showProductsInCarousel()`: Displays in the console the products currently in the circular storage (CarouselOfCakes).
+
+### CommandTaker
+
+**Class attributes**: CarouselOfCakes – which holds the most frequently purchased cakes, CakeMaker – the one who makes the cakes, CakeRecipe – the list of ready-made cakes.
+
+**Functionalities**:
+- `takeCommand(recipe: CakeRecipe): Cake`: Takes the order from the CommandPanel and forwards it to the CakeMaker. Before doing so, it checks if the cake is available in the CarouselOfCakes. If the desired product is there, it will be taken directly from there.
+- `takeCommand(recipe: CakeRecipe, nrOfCakes): Array[Cake]`: Takes the order in case multiple cakes are requested. If a quantity of products is required, it will directly request the CakeMaker.
+- `getCakesFromCarousel(): Array[Cake]`: Returns the list of cakes currently in the CarouselOfCakes.
+- `checkCarouselOfCakes(): bool`: Checks the current capacity of the CarouselOfCakes.
+- `refillCarousel(): void`: If the capacity in the Carousel is low, this method will request the CakeMaker to make as many cakes as needed to fill the CarouselOfCakes to its maximum capacity.
+
+### CakeMaker
+
+**Class attributes**: None.
+
+**Class functions**:
+- `takeCommand(recipe: RecipeCake): Cake`: This method simulates the creation of a cake. For each recipe received, it waits for 5 seconds and then returns an object of type Cake. It takes the name from the recipe.
+
 ![image](https://user-images.githubusercontent.com/104904530/200133009-d2d69545-20e6-44e5-9cd0-03afb106816f.png)
 
 ![image](https://user-images.githubusercontent.com/104904530/200133129-c5951e96-0d78-46c4-ac8d-3cf9298ae761.png)
