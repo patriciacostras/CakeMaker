@@ -40,4 +40,69 @@ Endless Cakes! The story that never ends… The application simulates an automat
 
 ![image](https://user-images.githubusercontent.com/104904530/200133009-d2d69545-20e6-44e5-9cd0-03afb106816f.png)
 
+The image content describes the class structure and relationships in the "Endless Cakes" application. Here's an explanation in English:
+
+1. **Cake Class**:
+   - **Attributes**: 
+     - `name: char[]` - The name of the cake.
+   - **Methods**:
+     - `Cake(name: char[])` - Constructor to initialize the cake with a name.
+     - `getName(): char[]` - Returns the name of the cake.
+
+2. **CakeMaker Class**:
+   - **Methods**:
+     - `CakeMaker()` - Constructor.
+     - `takeCommand(recipe: RecipeCake): Cake` - Takes a recipe and returns a Cake object after simulating the baking process.
+
+3. **CommandTaker Class**:
+   - **Attributes**:
+     - `carouselRecipe: RecipeCake` - The recipe for cakes in the carousel.
+     - `cakeMaker: CakeMaker` - Instance of CakeMaker to bake cakes.
+     - `carousel: CarouselOfCakes` - The storage for cakes.
+   - **Methods**:
+     - `CommandTaker()` - Constructor.
+     - `takeCommand(recipe: RecipeCake): Cake` - Takes a recipe and processes the order.
+     - `takeCommand(recipe: RecipeCake, nrOfCakes: int): Array(Cake)` - Takes multiple cake orders.
+     - `takeCommand(nameOfCake: string): Cake` - Takes an order by cake name.
+     - `getCakesFromCarousel(): Array(Cake)` - Returns the list of cakes in the carousel.
+     - `checkCarouselOfCakes(): bool` - Checks the current state of the carousel.
+     - `refillCarousel(): bool` - Refills the carousel if necessary.
+
+4. **CommandPanel Class**:
+   - **Attributes**:
+     - `menu: List<CakeRecipe>` - The list of available cake recipes.
+     - `commandTaker: CommandTaker` - Instance of CommandTaker to handle orders.
+   - **Methods**:
+     - `CommandPanel()` - Constructor.
+     - `showProducts(): void` - Displays available products.
+     - `selectProduct(name: string): void` - Selects a product by name.
+     - `selectProduct(name: string, numberOfProducts: int): void` - Selects multiple products.
+     - `showProductsInCarousel(): void` - Displays products in the carousel.
+
+5. **RecipeCake Class**:
+   - **Attributes**:
+     - `name: string` - The name of the recipe.
+     - `time: int` - The time required to prepare the cake.
+   - **Methods**:
+     - `Cake(name: string, time: int)` - Constructor to initialize the recipe.
+     - `getName(): string` - Returns the name of the recipe.
+     - `getTime(): int` - Returns the preparation time.
+
+The relationships between these classes include:
+- **Dependency**: Indicates that one class depends on another.
+- **Composition**: Represents a strong relationship where one class is composed of another.
+- **Association**: Represents a relationship where one class is associated with another.
+
+This structure outlines how the different components of the application interact to fulfill cake orders, manage the carousel, and handle the baking process.
+
 ![image](https://user-images.githubusercontent.com/104904530/200133129-c5951e96-0d78-46c4-ac8d-3cf9298ae761.png)
+
+The image appears to represent the architecture of the "Endless Cakes" application, illustrating the relationships between the main components:
+
+1. **Client**: The end-user who interacts with the application to order cakes.
+2. **Command Panel**: The interface through which the client places orders. It provides options for selecting cakes and viewing available products.
+3. **Command Taker**: This component processes the orders received from the Command Panel. It checks the availability of cakes in the CarouselOfCakes and communicates with the CakeMaker if additional cakes need to be prepared.
+4. **CarouselOfCakes**: A storage unit that holds up to 12 cakes. It serves as a quick-access repository for frequently requested cakes.
+5. **CakeMaker**: The component responsible for baking new cakes based on the recipes provided. It ensures that the CarouselOfCakes is replenished as needed.
+
+This diagram visually summarizes the flow of operations in the application, from the client's request to the fulfillment of the order, either directly from the CarouselOfCakes or via the CakeMaker.
